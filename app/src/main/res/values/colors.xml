@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="twinkrunRed">#db3a16</color>
+    <color name="twinkrunGreen">#00cfb0</color>
+    <color name="twinkrunBlack">#262629</color>
+    <color name="twinkrunLightBlack">#353740</color>
+    <color name="twinkrunGold">#e4cdbb</color>
+    <color name="twinkrunWhite">#ffffff</color>
+</resources>
