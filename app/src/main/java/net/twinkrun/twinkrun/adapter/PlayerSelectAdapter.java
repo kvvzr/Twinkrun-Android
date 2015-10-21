@@ -1,6 +1,7 @@
 package net.twinkrun.twinkrun.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,7 @@ public class PlayerSelectAdapter extends ArrayAdapter<Pair<String, Player>> {
         return convertView;
     }
 
-    public boolean containsKey(String key) {
+    public boolean containsKey(@NonNull String key) {
         for (int i = 0; i < getCount(); i++) {
             Pair<String, Player> item = this.getItem(i);
             if (item.first.equals(key)) {
@@ -40,5 +41,15 @@ public class PlayerSelectAdapter extends ArrayAdapter<Pair<String, Player>> {
             }
         }
         return false;
+    }
+
+    public int getPlayerPosition(@NonNull String key) {
+        for (int i = 0; i < getCount(); i++) {
+            Pair<String, Player> item = this.getItem(i);
+            if (item.first.equals(key)) {
+                return i;
+            }
+        }
+        throw new IllegalArgumentException();
     }
 }
