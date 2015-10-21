@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Twinkrun</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="player_select_title">Select Players</string>
     <string name="action_settings">Settings</string>
 </resources>
