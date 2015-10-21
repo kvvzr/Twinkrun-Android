@@ -10,6 +10,8 @@
         <item name="android:textColorPrimary">@color/twinkrunWhite</item>
         <item name="android:textColorPrimaryInverse">@color/twinkrunWhite</item>
         <item name="android:dropDownListViewStyle">@style/ActionBar</item>
+        <item name="android:textColorSecondary">@color/twinkrunWhite</item>
+        <item name="android:textColorSecondaryInverse">@color/twinkrunWhite</item>
     </style>
     <style name="ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:background">@color/twinkrunBlack</item>
