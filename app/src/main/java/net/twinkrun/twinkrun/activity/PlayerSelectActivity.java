@@ -13,10 +13,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.util.Pair;
 import android.widget.ListView;
 
 import net.twinkrun.twinkrun.R;
+import net.twinkrun.twinkrun.adapter.PlayerSelectAdapter;
+import net.twinkrun.twinkrun.entity.Player;
+
 
 import java.util.ArrayList;
 
@@ -31,6 +34,7 @@ public class PlayerSelectActivity extends AppCompatActivity {
     @Bind(R.id.player_list_view)
     ListView mPlayerListView;
 
+    private PlayerSelectAdapter mPlayerSelectAdapter;
     private BluetoothManager mBleManager;
     private BluetoothAdapter mBleAdapter;
     private BluetoothLeScanner mBleScanner;
@@ -43,8 +47,8 @@ public class PlayerSelectActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, new ArrayList<String>());
-        mPlayerListView.setAdapter(adapter);
+        mPlayerSelectAdapter = new PlayerSelectAdapter(this, new ArrayList<Pair<String, Player>>());
+        mPlayerListView.setAdapter(mPlayerSelectAdapter);
         mPlayerListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -52,6 +56,13 @@ public class PlayerSelectActivity extends AppCompatActivity {
         } else {
             setupBle();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("PlayerSelectActivity", "stop");
+        mBleScanner.stopScan(null);
     }
 
     @Override
@@ -86,7 +97,12 @@ public class PlayerSelectActivity extends AppCompatActivity {
             @Override
             public void onScanResult(int callbackType, ScanResult result) {
                 super.onScanResult(callbackType, result);
-                Log.d("PlayerSelectActivity", result.getDevice().getName());
+                String key = result.getDevice().getAddress();
+                String name = result.getDevice().getName();
+                if (!mPlayerSelectAdapter.containsKey(key) && name != null) {
+                    mPlayerSelectAdapter.add(new Pair<>(key, Player.fromBleName(name)));
+                    mPlayerListView.setItemChecked(mPlayerSelectAdapter.getCount() - 1, true);
+                }
             }
 
             @Override
