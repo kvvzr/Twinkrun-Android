@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="android:Theme.Material.Light">
+        <item name="android:colorPrimaryDark">@color/twinkrunGreen</item>
+        <item name="android:colorPrimary">@color/twinkrunGreen</item>
+        <item name="android:textColorPrimary">@color/twinkrunWhite</item>
+        <item name="android:colorBackground">@color/twinkrunLightBlack</item>
+        <item name="android:windowBackground">@color/twinkrunWhite</item>
+        <item name="android:colorForeground">@color/twinkrunWhite</item>
+        <item name="android:navigationBarColor">@color/twinkrunBlack</item>
+        <item name="android:colorAccent">@color/twinkrunGreen</item>
+        <item name="android:textColorSecondary">@color/twinkrunWhite</item>
+        <item name="android:textColorPrimaryInverse">@color/twinkrunWhite</item>
+        <item name="android:textColorSecondaryInverse">@color/twinkrunWhite</item>
+        <item name="android:dropDownListViewStyle">@style/ActionBar</item>
+    </style>
+    <style name="ActionBar" parent="android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:background">@color/twinkrunBlack</item>
     </style>
 </resources>
