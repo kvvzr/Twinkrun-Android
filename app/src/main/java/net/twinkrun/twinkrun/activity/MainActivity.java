@@ -1,23 +1,15 @@
 package net.twinkrun.twinkrun.activity;
 
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import net.twinkrun.twinkrun.R;
-import net.twinkrun.twinkrun.adapter.MainFragmentPagerAdapter;
-import net.twinkrun.twinkrun.fragment.HistoryFragment;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends FragmentActivity {
-
-    @Bind(R.id.main_view_pager)
-    ViewPager mViewPager;
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +17,6 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-
-        final FragmentManager manager = getSupportFragmentManager();
-        final MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(manager);
-        adapter.addFragment("History", new HistoryFragment());
-        mViewPager.setAdapter(adapter);
-
     }
 
     @Override
