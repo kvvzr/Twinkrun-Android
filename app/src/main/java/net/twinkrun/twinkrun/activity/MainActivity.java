@@ -4,15 +4,22 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import net.twinkrun.twinkrun.R;
+import net.twinkrun.twinkrun.adapter.HistoryRecyclerAdapter;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+
+    @Bind(R.id.history_recycler_view)
+    RecyclerView mHistoryRecyclerView;
 
     @OnClick(R.id.play_button)
     public void onClickPlayButton() {
@@ -30,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
             // TODO: BLEに対応してなかった場合の表示
             finish();
         }
+
+        mHistoryRecyclerView.hasFixedSize();
+        mHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mHistoryRecyclerView.setAdapter(new HistoryRecyclerAdapter(this));
     }
 
     @Override
