@@ -17,7 +17,7 @@ public class Player extends Object {
         mSeed = seed;
     }
 
-    public void setFromBleName(@NonNull String text) {
+    public void setFromBleName(@NonNull String text) throws IllegalArgumentException {
         String[] data = text.split(",");
         if (data.length != 2) {
             throw new IllegalArgumentException();
