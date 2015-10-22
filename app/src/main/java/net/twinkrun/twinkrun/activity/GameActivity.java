@@ -3,7 +3,6 @@ package net.twinkrun.twinkrun.activity;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -97,7 +96,7 @@ public class GameActivity extends BaseBleActivity implements IGame {
     }
 
     @Override
-    public void onUpdateRole(Color color, int score) {
+    public void onUpdateRole(int color, int score) {
         Log.d("GameActivity", "onUpdateRole");
         double rand = Math.random();
         if (rand < 0.33) {
@@ -110,7 +109,7 @@ public class GameActivity extends BaseBleActivity implements IGame {
     }
 
     @Override
-    public void onFlash(Color color) {
+    public void onFlash(int color) {
         Log.d("GameActivity", "onFlash");
     }
 

@@ -2,9 +2,12 @@ package net.twinkrun.twinkrun.model;
 
 import android.bluetooth.le.ScanResult;
 import android.os.Handler;
+import android.util.Pair;
 
 import net.twinkrun.twinkrun.entity.Player;
+import net.twinkrun.twinkrun.entity.Role;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -17,7 +20,8 @@ public class Game {
     private Handler mCountDownTimer;
     private Player mPlayer;
     private List<Player> mOthers;
-
+    private List<Pair<Role, List<Integer>>> mTransition;
+    private List<Integer> mCurrentTransition;
 
     private boolean mPlaying = false;
     private int mScore;
@@ -53,6 +57,9 @@ public class Game {
     }
 
     public void stop() {
+        mTransition = new ArrayList<>();
+        mCurrentTransition = new ArrayList<>();
+
         mScore = 1000;
         mAddScore = 0;
         mFlashCount = 0;
@@ -127,6 +134,8 @@ public class Game {
     }
 
     private void updateScore() {
+        mCurrentTransition.add(mScore);
+
         mScore += mAddScore;
         mAddScore = 0;
 
@@ -138,7 +147,10 @@ public class Game {
     }
 
     private void updateRole() {
-        mIGame.onUpdateRole(null, mScore);
+        mIGame.onUpdateRole(0, mScore);
+
+        mTransition.add(new Pair<Role, List<Integer>>(null, mCurrentTransition));
+        mCurrentTransition.clear();
 
         mFlashCount = 0;
         flash();
@@ -146,7 +158,7 @@ public class Game {
 
     private void flash() {
         if (mFlashCount < 4 /* flashCount */) {
-            mIGame.onFlash(null);
+            mIGame.onFlash(0);
             mFlashTimer = new Handler();
             mFlashTimer.postDelayed(new Runnable() {
                 @Override
