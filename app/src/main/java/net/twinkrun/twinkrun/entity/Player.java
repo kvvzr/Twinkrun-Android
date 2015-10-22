@@ -7,6 +7,7 @@ public class Player extends Object {
     private String mName;
     private int mSeed;
     private boolean mPlayWith = true;
+    private boolean mCountedScore = false;
 
     public Player(@NonNull String text) {
         setFromBleName(text);
@@ -48,5 +49,13 @@ public class Player extends Object {
 
     public void togglePlayWith() {
         mPlayWith = !mPlayWith;
+    }
+
+    public boolean countedScore() {
+        return mCountedScore;
+    }
+
+    public void setCountedScore(boolean countedScore) {
+        mCountedScore = countedScore;
     }
 }

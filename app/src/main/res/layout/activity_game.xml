@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/background"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".GameActivity">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/play_button"
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:layout_gravity="center"
-        app:backgroundTint="@color/twinkrunClearWhite"/>
+        app:backgroundTint="@color/twinkrunClearWhite"
+        app:elevation="0dp"/>
+
+    <TextView
+        android:id="@+id/count_down_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/twinkrunWhite"
+        android:textSize="64sp"
+        android:visibility="invisible"
+        app:layout_anchor="@id/play_button"
+        app:layout_anchorGravity="center"/>
 
 </android.support.design.widget.CoordinatorLayout>

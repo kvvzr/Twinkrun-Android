@@ -27,6 +27,7 @@
         </activity>
         <activity android:name=".activity.PlayerSelectActivity"/>
         <activity android:name=".activity.GameActivity"/>
+        <activity android:name=".activity.ResultActivity"/>
     </application>
 
 
