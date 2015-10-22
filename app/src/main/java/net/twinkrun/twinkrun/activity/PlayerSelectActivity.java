@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import net.twinkrun.twinkrun.R;
@@ -29,15 +31,22 @@ import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PlayerSelectActivity extends AppCompatActivity {
 
-    private final static String ADVERTISE_UUID = "4C866825-6CF5-48DD-8C64-D9EC109CB3E4";
     private final static int REQUEST_ENABLE_BT = 25252;
     private final static int REQUEST_COARSE_LOCATION = 83025;
 
     @Bind(R.id.player_list_view)
     ListView mPlayerListView;
+
+    @OnClick(R.id.play_button)
+    public void onClickPlayButton() {
+        if (mPlayerSelectAdapter != null && mPlayerSelectAdapter.readyForPlaying()) {
+            startActivity(new Intent(this, GameActivity.class));
+        }
+    }
 
     private PlayerSelectAdapter mPlayerSelectAdapter;
     private BluetoothManager mBleManager;
@@ -56,6 +65,16 @@ public class PlayerSelectActivity extends AppCompatActivity {
         mPlayerSelectAdapter = new PlayerSelectAdapter(this, new ArrayList<Pair<String, Player>>());
         mPlayerListView.setAdapter(mPlayerSelectAdapter);
         mPlayerListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mPlayerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                mPlayerSelectAdapter.getItem(position).second.togglePlayWith();
+            }
+        });
+
+        // FIXME: 一時的にテスト用に入れる
+        mPlayerSelectAdapter.add(new Pair<>("address", new Player("nico,830")));
+        mPlayerListView.setItemChecked(0, true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_COARSE_LOCATION);
@@ -146,7 +165,7 @@ public class PlayerSelectActivity extends AppCompatActivity {
 
     private AdvertiseData makeAdvertiseData() {
         AdvertiseData.Builder builder = new AdvertiseData.Builder();
-        builder.addServiceUuid(new ParcelUuid(UUID.fromString(ADVERTISE_UUID)));
+        builder.addServiceUuid(new ParcelUuid(UUID.fromString(getResources().getString(R.string.advertise_uuid))));
         builder.setIncludeDeviceName(true);
         return builder.build();
     }

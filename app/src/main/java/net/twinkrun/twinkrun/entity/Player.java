@@ -6,6 +6,7 @@ public class Player extends Object {
 
     private String mName;
     private int mSeed;
+    private boolean mPlayWith = true;
 
     public Player(@NonNull String text) {
         setFromBleName(text);
@@ -35,5 +36,17 @@ public class Player extends Object {
 
     public int getSeed() {
         return mSeed;
+    }
+
+    public boolean playWith() {
+        return mPlayWith;
+    }
+
+    public void setPlayWith(boolean playWith) {
+        mPlayWith = playWith;
+    }
+
+    public void togglePlayWith() {
+        mPlayWith = !mPlayWith;
     }
 }

@@ -6,4 +6,5 @@
     <color name="twinkrunLightBlack">#353740</color>
     <color name="twinkrunGold">#e4cdbb</color>
     <color name="twinkrunWhite">#ffffff</color>
+    <color name="twinkrunClearWhite">#77ffffff</color>
 </resources>

@@ -25,7 +25,7 @@ public class PlayerSelectAdapter extends ArrayAdapter<Pair<String, Player>> {
             convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_list_item_multiple_choice, parent, false);
         }
 
-        Pair<String, Player> item = this.getItem(position);
+        Pair<String, Player> item = getItem(position);
         if (item != null) {
             CheckedTextView textView = (CheckedTextView) convertView.findViewById(android.R.id.text1);
             textView.setText(item.second.getName());
@@ -35,7 +35,7 @@ public class PlayerSelectAdapter extends ArrayAdapter<Pair<String, Player>> {
 
     public boolean containsKey(@NonNull String key) {
         for (int i = 0; i < getCount(); i++) {
-            Pair<String, Player> item = this.getItem(i);
+            Pair<String, Player> item = getItem(i);
             if (item.first.equals(key)) {
                 return true;
             }
@@ -45,11 +45,20 @@ public class PlayerSelectAdapter extends ArrayAdapter<Pair<String, Player>> {
 
     public int getPlayerPosition(@NonNull String key) {
         for (int i = 0; i < getCount(); i++) {
-            Pair<String, Player> item = this.getItem(i);
+            Pair<String, Player> item = getItem(i);
             if (item.first.equals(key)) {
                 return i;
             }
         }
         throw new IllegalArgumentException();
+    }
+
+    public boolean readyForPlaying() {
+        for (int i = 0; i < getCount(); i++) {
+            if (getItem(i).second.playWith()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
