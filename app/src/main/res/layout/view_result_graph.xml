@@ -6,12 +6,45 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/date_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/twinkrunClearWhite"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/date_text_view"
+            android:text="@string/score_text"
+            android:textColor="@color/twinkrunWhite"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/score_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/date_text_view"
+            android:textColor="@color/twinkrunWhite"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+
     <org.eazegraph.lib.charts.ValueLineChart
         android:id="@+id/line_chart"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:egIndicatorLineColor="@color/twinkrunClearWhite"
-        app:egIndicatorTextColor="@color/twinkrunClearWhite"
+        app:egIndicatorLeftPadding="16dp"
+        app:egIndicatorLineColor="@color/twinkrunWhite"
+        app:egIndicatorTextColor="@color/twinkrunWhite"
+        app:egIndicatorTextUnit="Point"
+        app:egIndicatorTopPadding="16dp"
         app:egLegendHeight="40dp"
         app:egShowStandardValue="true"
         app:egUseOverlapFill="true"/>

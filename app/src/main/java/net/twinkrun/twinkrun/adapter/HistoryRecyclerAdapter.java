@@ -7,10 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.twinkrun.twinkrun.R;
+import net.twinkrun.twinkrun.entity.Player;
+import net.twinkrun.twinkrun.entity.Result;
+import net.twinkrun.twinkrun.entity.Role;
+import net.twinkrun.twinkrun.view.ResultGraphView;
 
-import org.eazegraph.lib.charts.ValueLineChart;
-import org.eazegraph.lib.models.ValueLinePoint;
-import org.eazegraph.lib.models.ValueLineSeries;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,40 +29,28 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.view_result_graph, parent, false));
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.view_history, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ValueLineSeries series = new ValueLineSeries();
-        series.setColor(0xFF56B7F1);
-
-        series.addPoint(new ValueLinePoint("Jan", 2.4f));
-        series.addPoint(new ValueLinePoint("Feb", 3.4f));
-        series.addPoint(new ValueLinePoint("Mar", .4f));
-        series.addPoint(new ValueLinePoint("Apr", 1.2f));
-        series.addPoint(new ValueLinePoint("Mai", 2.6f));
-        series.addPoint(new ValueLinePoint("Jun", 1.0f));
-        series.addPoint(new ValueLinePoint("Jul", 3.5f));
-        series.addPoint(new ValueLinePoint("Aug", 2.4f));
-        series.addPoint(new ValueLinePoint("Sep", 2.4f));
-        series.addPoint(new ValueLinePoint("Oct", 3.4f));
-        series.addPoint(new ValueLinePoint("Nov", .4f));
-        series.addPoint(new ValueLinePoint("Dec", 1.3f));
-
-        holder.mValueLineChart.addSeries(series);
-        holder.mValueLineChart.startAnimation();
+        holder.mResultGraphView.setResult(getItem(position));
+        holder.mResultGraphView.startAnimation();
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 10;
+    }
+
+    public Result getItem(int position) {
+        return new Result(1000, new HashMap<Role, List<Integer>>(), new ArrayList<Player>());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.line_chart)
-        ValueLineChart mValueLineChart;
+        @Bind(R.id.result_graph_view)
+        ResultGraphView mResultGraphView;
 
         public ViewHolder(View itemView) {
             super(itemView);

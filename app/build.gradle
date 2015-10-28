@@ -18,6 +18,9 @@ android {
     }
     productFlavors {
     }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
 }
 
 dependencies {
@@ -26,5 +29,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.blackfizz:eazegraph:1.2.2@aar'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile 'io.realm:realm-android:0.84.0'
     compile 'org.apache.commons:commons-lang3:3.4'
 }

@@ -6,6 +6,7 @@ public class Player extends Object {
 
     private String mName;
     private int mSeed;
+    private int mScore;
     private boolean mPlayWith = true;
     private boolean mCountedScore = false;
 
@@ -37,6 +38,14 @@ public class Player extends Object {
 
     public int getSeed() {
         return mSeed;
+    }
+
+    public int getScore() {
+        return mScore;
+    }
+
+    public void setScore(int score) {
+        mScore = score;
     }
 
     public boolean playWith() {
