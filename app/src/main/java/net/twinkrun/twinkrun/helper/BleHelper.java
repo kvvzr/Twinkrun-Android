@@ -8,31 +8,36 @@ import android.bluetooth.le.BluetoothLeAdvertiser;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.os.ParcelUuid;
+import android.util.Log;
 
 import java.util.UUID;
 
 public class BleHelper {
 
-    public static void startAdvertiseAndScan(String deviceName, String uuidString, BluetoothAdapter adapter, BluetoothLeAdvertiser advertiser, BluetoothLeScanner scanner, ScanCallback callback) {
+    public static void startAdvertiseAndScan(String deviceName, String uuidString, BluetoothAdapter adapter, ScanCallback callback) {
         // FIXME: 適切なデータにする
         adapter.setName(deviceName);
 
-        advertiser = adapter.getBluetoothLeAdvertiser();
+        BluetoothLeAdvertiser advertiser = adapter.getBluetoothLeAdvertiser();
         advertiser.startAdvertising(makeAdvertiseSetting(), makeAdvertiseData(uuidString), new EmptyAdvertiseCallback());
 
-        scanner = adapter.getBluetoothLeScanner();
+        BluetoothLeScanner scanner = adapter.getBluetoothLeScanner();
         scanner.startScan(callback);
     }
 
-    public static void stopAdvertiseAndScan(BluetoothLeAdvertiser advertiser, BluetoothLeScanner scanner) {
+    public static void stopAdvertiseAndScan(BluetoothAdapter adapter) {
+        BluetoothLeAdvertiser advertiser = adapter.getBluetoothLeAdvertiser();
+        BluetoothLeScanner scanner = adapter.getBluetoothLeScanner();
+
         if (advertiser != null) {
+            Log.d("BleHelper", "Stop Adv");
             advertiser.stopAdvertising(new EmptyAdvertiseCallback());
-            advertiser = null;
         }
         if (scanner != null) {
+            Log.d("BleHelper", "Stop Scan");
             scanner.stopScan(null);
-            scanner = null;
         }
+        adapter.disable();
     }
 
     public static final class EmptyAdvertiseCallback extends AdvertiseCallback {
@@ -52,12 +57,16 @@ public class BleHelper {
         builder.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY);
         builder.setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_MEDIUM);
         builder.setConnectable(false);
+        builder.setTimeout(0);
         return builder.build();
     }
 
     private static AdvertiseData makeAdvertiseData(String uuidString) {
         AdvertiseData.Builder builder = new AdvertiseData.Builder();
         builder.addServiceUuid(new ParcelUuid(UUID.fromString(uuidString)));
+        builder.addManufacturerData(0, "ぽよ".getBytes());
+        //builder.addServiceData(new ParcelUuid(UUID.fromString(uuidString)), "ぽよ".getBytes());
+        //builder.addServiceUuid(new ParcelUuid(UUID.fromString("CDB546E0-CC68-4494-8C39-81B542A35A2A")));
         builder.setIncludeDeviceName(true);
         return builder.build();
     }

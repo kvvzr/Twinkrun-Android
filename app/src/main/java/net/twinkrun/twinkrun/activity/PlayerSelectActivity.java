@@ -4,6 +4,7 @@ import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,9 +13,9 @@ import android.widget.ListView;
 import net.twinkrun.twinkrun.R;
 import net.twinkrun.twinkrun.adapter.PlayerSelectAdapter;
 import net.twinkrun.twinkrun.entity.Player;
-import net.twinkrun.twinkrun.helper.BleHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,7 +30,6 @@ public class PlayerSelectActivity extends BaseBleActivity {
     public void onClickPlayButton() {
         if (mPlayerSelectAdapter != null && mPlayerSelectAdapter.readyForPlaying()) {
             startActivity(new Intent(this, GameActivity.class));
-            BleHelper.stopAdvertiseAndScan(mBleAdvertiser, mBleScanner);
         }
     }
 
@@ -56,7 +56,11 @@ public class PlayerSelectActivity extends BaseBleActivity {
         // FIXME: 一時的にテスト用に入れる
         mPlayerSelectAdapter.add(new Pair<>("address", new Player("nico,830")));
         mPlayerListView.setItemChecked(0, true);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         setupBle("kwzr,25", getResources().getString(R.string.advertise_uuid), mScanCallback);
     }
 
@@ -64,8 +68,15 @@ public class PlayerSelectActivity extends BaseBleActivity {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             super.onScanResult(callbackType, result);
-            String key = result.getDevice().getAddress();
+            String key = result.getDevice().getName();
             String name = result.getDevice().getName();
+
+            if (result.getScanRecord() != null && result.getScanRecord().getServiceUuids() != null)
+                Log.d("PlayerSelectActivity", result.getScanRecord().getServiceUuids().toString());
+
+            if (result.getDevice().getUuids() != null)
+                Log.d("PlayerSelectActivity", "result.getDevice().getUuids():" + Arrays.toString(result.getDevice().getUuids()));
+
             if (mPlayerSelectAdapter.containsKey(key)) {
                 int position = mPlayerSelectAdapter.getPlayerPosition(key);
                 Player player = mPlayerSelectAdapter.getItem(position).second;
